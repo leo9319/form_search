@@ -11,8 +11,11 @@
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
-    return view('welcome');
+	$form_name = 'GIC Clients';
+    return view('welcome', compact('form_name'));
 })->middleware('auth');
 
 Route::resource('admin', 'AdminController');
@@ -22,6 +25,7 @@ Route::post('admin/change/column', 'AdminController@changeColumn')->name('admin.
 Route::post('admin/search', 'AdminController@search')->name('admin.search');
 Route::get('admin/reset/column/{form_id}', 'AdminController@resetColumn')->name('admin.reset.column');
 
-Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('search/form', 'SearchController@form')->name('search.form');
+Route::post('search/form/results', 'SearchController@searchFormResults')->name('search.form.results');
