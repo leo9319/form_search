@@ -58,4 +58,43 @@ class SearchController extends Controller
     	return view('search.form_results', compact('results'));
 
     }
+
+    public function formToForm()
+    {
+        $data['forms'] = FormTable::whereNotNull('form_name');
+
+        return view('search.form_to_form', $data);
+    }
+
+    public function resultFormToForm(Request $request)
+    {
+        $request->validate([
+            'from' => 'required',
+            'to' => 'required',
+        ]);
+
+        $form_1 = FormTable::find($request->id_1);
+        $form_2 = FormTable::find($request->id_2);
+
+
+        $table_name_1 = $form_1->form_id;
+
+        $numbers_form_1 = DB::table($table_name_1)
+            ->where('date_created', '>=', $request->from)
+            ->where('date_created', '<=', $request->to)
+            ->pluck($form_1->phone);
+
+        if(isset($form_2->phone)) {
+            $query = DB::table($form_2->form_id)->whereIn($form_2->phone, $numbers_form_1);
+
+            $total = DB::table($form_2->form_id)->count();
+
+            $result['form_name'] =  $form_2->form_name; 
+            $result['count'] =  $query->count();
+            $result['not_matched'] = $total - $query->count();
+
+        }
+
+        return view('search.form_to_form_results', compact('result'));
+    }
 }

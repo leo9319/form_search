@@ -28,4 +28,6 @@ Route::get('admin/reset/column/{form_id}', 'AdminController@resetColumn')->name(
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('search/form', 'SearchController@form')->name('search.form');
+Route::get('search/form-to-form', 'SearchController@formToForm')->name('search.form.to.form');
 Route::post('search/form/results', 'SearchController@searchFormResults')->name('search.form.results');
+Route::post('search/form-to-form/results', 'SearchController@resultFormToForm')->name('search.form.to.form.results');
