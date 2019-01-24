@@ -66,7 +66,7 @@
                   @else
                   <td>No email id found!</td>
                   @endif
-                  <td>{{ $data['dates'] }}</td>
+                  <td>{{ Carbon\Carbon::parse($data['dates'])->format('jS M, Y h:i:sa') }}</td>
                   <td><a href="{{ url('http://gicclients.com/forms/view_entry.php?form_id=' . $data['form_id'] . '&entry_id=' . $data['id']) }}" class="btn btn-success btn-sm btn-block">View Entry</a></td>
                </tr>
                @empty

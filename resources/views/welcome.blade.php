@@ -23,7 +23,7 @@
             <div class="form-group">
 
               {{ Form::label('Search By Email:') }}
-              {{ Form::email('email', null, ['class' => 'form-control input-lg', 'placeholder'=>'Email']) }}
+              {{ Form::text('email', null, ['class' => 'form-control input-lg', 'placeholder'=>'Email']) }}
               
             </div>
 

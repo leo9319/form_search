@@ -195,7 +195,7 @@ class AdminController extends Controller
 
             foreach ($named_forms_with_email as $index => $forms) {
 
-                $results = DB::table($forms->form_id)->where($forms->email, $request->email)->get();
+                $results = DB::table($forms->form_id)->where($forms->email, 'like', '%' . $request->email . '%')->get();
 
                 if($results->count() > 0) {
                     $data[$index]['form_names'] = $forms->form_name;
