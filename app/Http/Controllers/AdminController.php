@@ -141,6 +141,14 @@ class AdminController extends Controller
             
             FormTable::find($table_id)->update(['email' => $request->column_name]);
 
+        } elseif ($request->alias == 'first_name') {
+            
+            FormTable::find($table_id)->update(['first_name' => $request->column_name]);
+
+        } elseif ($request->alias == 'last_name') {
+            
+            FormTable::find($table_id)->update(['last_name' => $request->column_name]);
+
         } elseif ($request->alias == 'date') {
             
             FormTable::find($table_id)->update(['date' => $request->column_name]);
@@ -175,6 +183,10 @@ class AdminController extends Controller
                         foreach ($result as $key => $value) {
                             if($key == $forms->phone) {
                                 $data[$index]['phones'] = $value;
+                            } elseif ($key == $forms->first_name) {
+                                $data[$index]['first_name'] = $value;
+                            } elseif ($key == $forms->last_name) {
+                                $data[$index]['last_name'] = $value;
                             } elseif ($key == $forms->email) {
                                 $data[$index]['emails'] = $value;
                             } elseif ($key == $forms->date) {
@@ -205,6 +217,10 @@ class AdminController extends Controller
                         foreach ($result as $key => $value) {
                             if($key == $forms->phone) {
                                 $data[$index]['phones'] = $value;
+                            } elseif ($key == $forms->first_name) {
+                                $data[$index]['first_name'] = $value;
+                            } elseif ($key == $forms->last_name) {
+                                $data[$index]['last_name'] = $value;
                             } elseif ($key == $forms->email) {
                                 $data[$index]['emails'] = $value;
                             } elseif ($key == $forms->date) {
@@ -216,7 +232,103 @@ class AdminController extends Controller
                     }
                 }
             }
-        }
+        } elseif ($request->first_name) {
+
+            $variable = $request->first_name;
+
+            $named_forms_with_first_name = $named_forms->whereNotNull('first_name')->get();
+
+            $array_index = 0;
+
+            foreach ($named_forms_with_first_name as $index => $forms) {
+
+                $results = DB::table($forms->form_id)->where($forms->first_name, 'like', '%' . $request->first_name . '%')->get();
+
+
+                if($results->count() > 0) {
+                    $counter = $results->count();
+
+                    while ($counter > 0) {                        
+
+                        foreach ($results as $result) {
+                            $data[$array_index]['form_names'] = $forms->form_name;
+                            $data[$array_index]['form_id'] = preg_replace('/[^0-9]/','', $forms->form_id);
+
+                            foreach ($result as $key => $value) {
+                                if($key == $forms->phone) {
+                                    $data[$array_index]['phones'] = $value;
+                                } elseif ($key == $forms->first_name) {
+                                    $data[$array_index]['first_name'] = $value;
+                                } elseif ($key == $forms->last_name) {
+                                    $data[$array_index]['last_name'] = $value;
+                                } elseif ($key == $forms->email) {
+                                    $data[$array_index]['emails'] = $value;
+                                } elseif ($key == $forms->date) {
+                                    $data[$array_index]['dates'] = $value;
+                                } elseif ($key == 'id') {
+                                    $data[$array_index]['id'] = $value;
+                                }
+                            }
+
+                            $array_index++;
+                        }
+
+                        $counter--;
+
+                    }
+                    
+                }
+            }
+        } elseif ($request->last_name) {
+
+            $variable = $request->last_name;
+
+            $named_forms_with_first_name = $named_forms->whereNotNull('last_name')->get();
+
+            $array_index = 0;
+
+            foreach ($named_forms_with_first_name as $index => $forms) {
+
+                $results = DB::table($forms->form_id)->where($forms->last_name, 'like', '%' . $request->last_name . '%')->get();
+
+
+                if($results->count() > 0) {
+                    $counter = $results->count();
+
+                    while ($counter > 0) {                        
+
+                        foreach ($results as $result) {
+                            $data[$array_index]['form_names'] = $forms->form_name;
+                            $data[$array_index]['form_id'] = preg_replace('/[^0-9]/','', $forms->form_id);
+
+                            foreach ($result as $key => $value) {
+                                if($key == $forms->phone) {
+                                    $data[$array_index]['phones'] = $value;
+                                } elseif ($key == $forms->first_name) {
+                                    $data[$array_index]['first_name'] = $value;
+                                } elseif ($key == $forms->last_name) {
+                                    $data[$array_index]['last_name'] = $value;
+                                } elseif ($key == $forms->email) {
+                                    $data[$array_index]['emails'] = $value;
+                                } elseif ($key == $forms->date) {
+                                    $data[$array_index]['dates'] = $value;
+                                } elseif ($key == 'id') {
+                                    $data[$array_index]['id'] = $value;
+                                }
+                            }
+
+                            $array_index++;
+                        }
+
+                        $counter--;
+
+                    }
+                    
+                }
+            }
+        } 
+
+        // return $data;
 
         return view('result')->with([
             'datas' => $data,

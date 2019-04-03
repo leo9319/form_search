@@ -50,6 +50,8 @@
             <thead>
                <tr>
                   <th scope="col">Form Name</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
                   <th scope="col">Phone</th>
                   <th scope="col">Email</th>
                   <th scope="col">Date</th>
@@ -60,6 +62,16 @@
                @forelse($datas as $data)
                <tr>
                   <td>{{ $data['form_names'] }}</td>
+                  @if(!empty($data['first_name']))
+                  <td>{{ $data['first_name'] }}</td>
+                  @else
+                  <td>N/A</td>
+                  @endif
+                  @if(!empty($data['last_name']))
+                  <td>{{ $data['last_name'] }}</td>
+                  @else
+                  <td>N/A</td>
+                  @endif
                   <td>{{ $data['phones'] }}</td>
                   @if(!empty($data['emails']))
                   <td>{{ $data['emails'] }}</td>
@@ -78,6 +90,8 @@
             <tfoot>
                <tr>
                   <th scope="col">Form Name</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
                   <th scope="col">Phone</th>
                   <th scope="col">Email</th>
                   <th scope="col">Date</th>

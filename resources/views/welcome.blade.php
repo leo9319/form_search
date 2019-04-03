@@ -15,6 +15,20 @@
 
             <div class="form-group">
 
+              {{ Form::label('Search By First Name:') }}
+              {{ Form::text('first_name', null, ['class' => 'form-control input-lg', 'placeholder'=>'First Name']) }}
+               
+            </div>
+
+            <div class="form-group">
+
+              {{ Form::label('Search By Last Name:') }}
+              {{ Form::text('last_name', null, ['class' => 'form-control input-lg', 'placeholder'=>'Last Name']) }}
+               
+            </div>
+
+            <div class="form-group">
+
               {{ Form::label('Search By Phone:') }}
               {{ Form::number('phone', null, ['class' => 'form-control input-lg', 'placeholder'=>'Phone Number']) }}
                

@@ -93,6 +93,10 @@ $(document).ready( function () {
 			            		Phone
 		            		@elseif($table->email == $column)
 		            			Email
+	            			@elseif($table->first_name == $column)
+		            			First Name
+	            			@elseif($table->last_name == $column)
+		            			Last Name
 	            			@elseif($table->date == $column)
 		            			Date
 			            	@endif
@@ -161,6 +165,8 @@ $(document).ready( function () {
 					<label class="form-label">Column Name:</label>
 
 					<select name="alias" class="form-control">
+						<option value="first_name">First Name</option>
+						<option value="last_name">Last Name</option>
 						<option value="phone">Phone</option>
 						<option value="email">Email</option>
 						<option value="date">Date</option>
