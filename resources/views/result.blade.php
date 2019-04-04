@@ -45,7 +45,7 @@
 
 <div class="container">
    <div class="row">
-      <div class="col-lg-10 offset-lg-1 mt-3 p-3" style="border: 0.5px solid black; border-radius: 10px; border-color: #D8DBD1">
+      <div class="col-lg-10 offset-lg-1 mt-3 p-3" style="border: 0.5px solid black; border-radius: 10px; border-color: #D8DBD1;">
          <table id="results" class="table table-striped table-bordered" style="width:100%">
             <thead>
                <tr>
@@ -72,7 +72,11 @@
                   @else
                   <td>N/A</td>
                   @endif
-                  <td>{{ $data['phones'] }}</td>
+                  @if(!empty($data['phone']))
+                  <td>{{ $data['phone'] }}</td>
+                  @else
+                  <td>N/A</td>
+                  @endif
                   @if(!empty($data['emails']))
                   <td>{{ $data['emails'] }}</td>
                   @else

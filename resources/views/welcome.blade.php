@@ -6,7 +6,7 @@
 
      <div class="row">
 
-       <div class="col-lg-6 offset-lg-3 mt-3" style="border: 0.5px solid black; border-radius: 10px; height: 400px; border-color: #D8DBD1">
+       <div class="col-lg-6 offset-lg-3 mt-3" style="border: 0.5px solid black; border-radius: 10px; height: 600px; border-color: #D8DBD1">
 
          <h1 class="mt-4 text-center">{{ $form_name }}</h1>
          <hr>

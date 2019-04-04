@@ -153,7 +153,7 @@ class AdminController extends Controller
             
             FormTable::find($table_id)->update(['date' => $request->column_name]);
 
-        } 
+        }
 
         return redirect()->back();
     }
@@ -162,11 +162,11 @@ class AdminController extends Controller
      {
         $named_forms = FormTable::whereNotNull('form_name');
         $data = array();
+        $array_index = 0;
 
         if($request->phone) {
 
             $variable = $request->phone;
-            // $data = array();
 
             $named_forms_with_phone = $named_forms->whereNotNull('phone')->get();
 
@@ -176,26 +176,28 @@ class AdminController extends Controller
 
                 if($results->count() > 0) {
 
-                    $data[$index]['form_names'] = $forms->form_name;
-                    $data[$index]['form_id'] = preg_replace('/[^0-9]/','', $forms->form_id);
+                    $data[$array_index]['form_names'] = $forms->form_name;
+                    $data[$array_index]['form_id'] = preg_replace('/[^0-9]/','', $forms->form_id);
 
                     foreach ($results as $result) {
                         foreach ($result as $key => $value) {
                             if($key == $forms->phone) {
-                                $data[$index]['phones'] = $value;
+                                $data[$array_index]['phones'] = $value;
                             } elseif ($key == $forms->first_name) {
-                                $data[$index]['first_name'] = $value;
+                                $data[$array_index]['first_name'] = $value;
                             } elseif ($key == $forms->last_name) {
-                                $data[$index]['last_name'] = $value;
+                                $data[$array_index]['last_name'] = $value;
                             } elseif ($key == $forms->email) {
-                                $data[$index]['emails'] = $value;
+                                $data[$array_index]['emails'] = $value;
                             } elseif ($key == $forms->date) {
-                                $data[$index]['dates'] = $value;
+                                $data[$array_index]['dates'] = $value;
                             } elseif ($key == 'id') {
-                                $data[$index]['id'] = $value;
+                                $data[$array_index]['id'] = $value;
                             }
                         }
                     }
+
+                    $array_index++;
                 }
             }
 
@@ -210,26 +212,28 @@ class AdminController extends Controller
                 $results = DB::table($forms->form_id)->where($forms->email, 'like', '%' . $request->email . '%')->get();
 
                 if($results->count() > 0) {
-                    $data[$index]['form_names'] = $forms->form_name;
-                    $data[$index]['form_id'] = preg_replace('/[^0-9]/','', $forms->form_id);
+                    $data[$array_index]['form_names'] = $forms->form_name;
+                    $data[$array_index]['form_id'] = preg_replace('/[^0-9]/','', $forms->form_id);
 
                     foreach ($results as $result) {
                         foreach ($result as $key => $value) {
                             if($key == $forms->phone) {
-                                $data[$index]['phones'] = $value;
+                                $data[$array_index]['phones'] = $value;
                             } elseif ($key == $forms->first_name) {
-                                $data[$index]['first_name'] = $value;
+                                $data[$array_index]['first_name'] = $value;
                             } elseif ($key == $forms->last_name) {
-                                $data[$index]['last_name'] = $value;
+                                $data[$array_index]['last_name'] = $value;
                             } elseif ($key == $forms->email) {
-                                $data[$index]['emails'] = $value;
+                                $data[$array_index]['emails'] = $value;
                             } elseif ($key == $forms->date) {
-                                $data[$index]['dates'] = $value;
+                                $data[$array_index]['dates'] = $value;
                             } elseif ($key == 'id') {
-                                $data[$index]['id'] = $value;
+                                $data[$array_index]['id'] = $value;
                             }
                         }
                     }
+
+                    $array_index++;
                 }
             }
         } elseif ($request->first_name) {
@@ -238,45 +242,35 @@ class AdminController extends Controller
 
             $named_forms_with_first_name = $named_forms->whereNotNull('first_name')->get();
 
-            $array_index = 0;
-
             foreach ($named_forms_with_first_name as $index => $forms) {
 
                 $results = DB::table($forms->form_id)->where($forms->first_name, 'like', '%' . $request->first_name . '%')->get();
 
 
-                if($results->count() > 0) {
-                    $counter = $results->count();
+                if($results->count() > 0) {                    
 
-                    while ($counter > 0) {                        
+                    foreach ($results as $result) {
+                        $data[$array_index]['form_names'] = $forms->form_name;
+                        $data[$array_index]['form_id'] = preg_replace('/[^0-9]/','', $forms->form_id);
 
-                        foreach ($results as $result) {
-                            $data[$array_index]['form_names'] = $forms->form_name;
-                            $data[$array_index]['form_id'] = preg_replace('/[^0-9]/','', $forms->form_id);
-
-                            foreach ($result as $key => $value) {
-                                if($key == $forms->phone) {
-                                    $data[$array_index]['phones'] = $value;
-                                } elseif ($key == $forms->first_name) {
-                                    $data[$array_index]['first_name'] = $value;
-                                } elseif ($key == $forms->last_name) {
-                                    $data[$array_index]['last_name'] = $value;
-                                } elseif ($key == $forms->email) {
-                                    $data[$array_index]['emails'] = $value;
-                                } elseif ($key == $forms->date) {
-                                    $data[$array_index]['dates'] = $value;
-                                } elseif ($key == 'id') {
-                                    $data[$array_index]['id'] = $value;
-                                }
+                        foreach ($result as $key => $value) {
+                            if($key == $forms->phone) {
+                                $data[$array_index]['phones'] = $value;
+                            } elseif ($key == $forms->first_name) {
+                                $data[$array_index]['first_name'] = $value;
+                            } elseif ($key == $forms->last_name) {
+                                $data[$array_index]['last_name'] = $value;
+                            } elseif ($key == $forms->email) {
+                                $data[$array_index]['emails'] = $value;
+                            } elseif ($key == $forms->date) {
+                                $data[$array_index]['dates'] = $value;
+                            } elseif ($key == 'id') {
+                                $data[$array_index]['id'] = $value;
                             }
-
-                            $array_index++;
                         }
 
-                        $counter--;
-
+                        $array_index++;
                     }
-                    
                 }
             }
         } elseif ($request->last_name) {
@@ -285,50 +279,40 @@ class AdminController extends Controller
 
             $named_forms_with_first_name = $named_forms->whereNotNull('last_name')->get();
 
-            $array_index = 0;
-
             foreach ($named_forms_with_first_name as $index => $forms) {
 
                 $results = DB::table($forms->form_id)->where($forms->last_name, 'like', '%' . $request->last_name . '%')->get();
 
 
                 if($results->count() > 0) {
-                    $counter = $results->count();
+                    $counter = $results->count();                   
 
-                    while ($counter > 0) {                        
+                    foreach ($results as $result) {
+                        $data[$array_index]['form_names'] = $forms->form_name;
+                        $data[$array_index]['form_id'] = preg_replace('/[^0-9]/','', $forms->form_id);
 
-                        foreach ($results as $result) {
-                            $data[$array_index]['form_names'] = $forms->form_name;
-                            $data[$array_index]['form_id'] = preg_replace('/[^0-9]/','', $forms->form_id);
-
-                            foreach ($result as $key => $value) {
-                                if($key == $forms->phone) {
-                                    $data[$array_index]['phones'] = $value;
-                                } elseif ($key == $forms->first_name) {
-                                    $data[$array_index]['first_name'] = $value;
-                                } elseif ($key == $forms->last_name) {
-                                    $data[$array_index]['last_name'] = $value;
-                                } elseif ($key == $forms->email) {
-                                    $data[$array_index]['emails'] = $value;
-                                } elseif ($key == $forms->date) {
-                                    $data[$array_index]['dates'] = $value;
-                                } elseif ($key == 'id') {
-                                    $data[$array_index]['id'] = $value;
-                                }
+                        foreach ($result as $key => $value) {
+                            if($key == $forms->phone) {
+                                $data[$array_index]['phones'] = $value;
+                            } elseif ($key == $forms->first_name) {
+                                $data[$array_index]['first_name'] = $value;
+                            } elseif ($key == $forms->last_name) {
+                                $data[$array_index]['last_name'] = $value;
+                            } elseif ($key == $forms->email) {
+                                $data[$array_index]['emails'] = $value;
+                            } elseif ($key == $forms->date) {
+                                $data[$array_index]['dates'] = $value;
+                            } elseif ($key == 'id') {
+                                $data[$array_index]['id'] = $value;
                             }
-
-                            $array_index++;
                         }
 
-                        $counter--;
-
+                        $array_index++;
                     }
                     
                 }
             }
         } 
-
-        // return $data;
 
         return view('result')->with([
             'datas' => $data,
@@ -342,10 +326,11 @@ class AdminController extends Controller
             'phone' => '',
             'email' => '',
             'date' => '',
+            'first_name' => '',
+            'last_name' => '',
         ]);
 
         return redirect()->back();
      }
-
 
 }
