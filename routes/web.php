@@ -31,3 +31,5 @@ Route::get('search/form', 'SearchController@form')->name('search.form');
 Route::get('search/form-to-form', 'SearchController@formToForm')->name('search.form.to.form');
 Route::post('search/form/results', 'SearchController@searchFormResults')->name('search.form.results');
 Route::post('search/form-to-form/results', 'SearchController@resultFormToForm')->name('search.form.to.form.results');
+
+Route::get('download-all-forms', 'SearchController@downloadAllForms')->name('search.download_all_forms');

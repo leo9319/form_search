@@ -103,4 +103,24 @@ class SearchController extends Controller
 
         return view('search.form_to_form_results', compact('result'));
     }
+
+    public function downloadAllForms()
+    {
+        $data = array();
+
+        $total_filled_forms = FormTable::whereNotNull('form_name')
+                ->whereNotNull('first_name')
+                ->whereNotNull('last_name')
+                ->whereNotNull('phone')
+                ->whereNotNull('email')
+                ->get();        
+
+        foreach ($total_filled_forms as $index => $total_filled_form) {
+
+            $data[] = count(DB::table($total_filled_form->form_id)->get());
+
+        }
+
+        return array_sum($data);
+    }
 }
